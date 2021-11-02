@@ -1,22 +1,26 @@
 <template>
-  <div
-    class="md:flex-shrink relative w-auto md:w-64 m-2"
-    v-on-clickaway="hideDropdown"
-  >
+  <div v-on-clickaway="hideDropdown">
     <button
-      class="bg-gray-200 border-2 border-black rounded-xl w-full z-0"
+      class="
+        bg-gray-200
+        border-2 border-black
+        rounded-xl
+        overflow-y-hidden
+        w-full
+        z-0
+      "
       v-on:click="showMenu = !showMenu"
     >
       <div class="flex flex-row justify-between mt-1 mx-2">
-        <p class="text-black text-lg">Filter Type</p>
+        <p class="text-black text-lg">{{ filterType }}</p>
         <font-awesome-icon
           :icon="faAngleDown"
           class="text-gray-900 text-lg my-auto"
         />
       </div>
       <div class="flex flex-row mx-2 justify-between">
-        <h1 class="text-gray-900 font-bold text-2xl">
-          {{ selectedFilter ? selectedFilter : "Filter" }}
+        <h1 class="text-gray-900 font-bold text-xl truncate">
+          {{ selectedFilter }}
         </h1>
         <font-awesome-icon
           v-if="selectedFilter"
@@ -28,7 +32,11 @@
       </div>
     </button>
     <!-- Dropdown Menu -->
-    <DropdownMenu :showMenu="showMenu" :changeFilter="changeFilter" />
+    <DropdownMenu
+      :showMenu="showMenu"
+      :changeFilter="changeFilter"
+      :dropdown="dropdownContents"
+    />
   </div>
 </template>
 
@@ -37,6 +45,7 @@ import { directive as onClickaway } from "vue-clickaway";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faAngleDown, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import DropdownMenu from "./DropdownMenu.vue";
+import { mapActions } from "vuex";
 
 export default {
   components: { FontAwesomeIcon, DropdownMenu },
@@ -44,26 +53,40 @@ export default {
     return {
       faAngleDown: faAngleDown,
       faTimesCircle: faTimesCircle,
-      selectedFilter: null,
+      filterValue: null,
       showMenu: false,
     };
   },
   directives: {
     onClickaway: onClickaway,
   },
+  props: ["filterType", "dropdownContents"],
   methods: {
+    ...mapActions(["updateFilter"]),
     hideDropdown: function () {
       this.showMenu = false;
     },
     changeFilter: function (val) {
-      this.selectedFilter = val;
+      const payload = {
+        name: this.dropdownContents.name,
+        value: val,
+      };
+      this.updateFilter(payload);
+      this.filterValue = val;
       this.showMenu = false;
-      console.log(this.selectedFilter);
     },
     resetFilter: function () {
-      this.selectedFilter = null;
-      console.log(this.selectedFilter);
-
+      const payload = {
+        name: this.dropdownContents.name,
+        value: null,
+      };
+      this.updateFilter(payload);
+      this.filterValue = null;
+    },
+  },
+  computed: {
+    selectedFilter: function () {
+      return this.filterValue ? this.filterValue : "ALL";
     },
   },
 };

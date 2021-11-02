@@ -22,6 +22,14 @@
 import Filters from "./Filters.vue";
 export default {
   components: { Filters },
+  computed: {
+    pipes: function () {
+      return this.$store.state.pipes;
+    },
+  },
+  created() {
+    this.$store.dispatch("getPipes");
+  },
 };
 </script>
 

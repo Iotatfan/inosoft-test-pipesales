@@ -24,6 +24,7 @@
       />
       <input
         type="text"
+        v-model="keyword"
         class="
           bg-gray-200
           text-gray-800 text-xl
@@ -37,9 +38,21 @@
     </div>
     <!-- Menu -->
     <div class="flex flex-col my-2 mx-3 max-h-36 overflow-y-scroll">
-      <button class="" v-for="n in 10" :key="n" v-on:click="changeFilter(n)">
-        <p class="text-lg text-left">{{ n }}</p>
-      </button>
+      <span
+        class="
+          flex flex-row
+          justify-between
+          cursor-pointer
+          px-2
+          hover:bg-gray-300
+        "
+        v-for="item in searchKeywords"
+        :key="item"
+        v-on:click="changeFilter(item)"
+      >
+        <p class="text-lg text-left">{{ item }}</p>
+        <p class="text-lg text-right">{{ countQty(item) }}</p>
+      </span>
     </div>
   </div>
 </template>
@@ -52,13 +65,34 @@ export default {
   components: { FontAwesomeIcon },
   data() {
     return {
+      pipes: null,
       faSearch: faSearch,
+      keyword: "",
     };
   },
   methods: {
-
+    countQty: function (item) {
+      let qty = 0;
+      
+      this.$store.state.pipes.forEach((pipe) => {
+        if (pipe[this.dropdown.name] === item) qty++;
+      });
+      return qty;
+    },
   },
-  props: ["showMenu", "changeFilter"],
+  computed: {
+    searchKeywords: function () {
+      return this.keyword
+        ? this.dropdown.contents.filter((n) =>
+            n.toString().toLowerCase().includes(this.keyword)
+          )
+        : this.dropdown.contents;
+    },
+  },
+  props: ["showMenu", "changeFilter", "dropdown"],
+  mounted() {
+    this.pipes = this.$store.state.pipes;
+  },
 };
 </script>
 

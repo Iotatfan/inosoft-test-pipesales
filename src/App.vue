@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <Home/>
+    <Pipisales />
   </div>
 </template>
 
 <script>
-import Home from './components/Home.vue'
+import Pipisales from "./components/Pipesales.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Home
-  }
-}
+    Pipisales,
+  },
+};
 </script>
 
 <style>

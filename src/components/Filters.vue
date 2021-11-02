@@ -2,7 +2,10 @@
   <div class="bg-gray-200 flex flex-col">
     <div class="flex flex-col md:flex-row justify-center relative">
       <!-- Filter Dropdown -->
-      <FilterDropdown v-for="n in 4" :key="n" />
+      <ProductTypeFilter />
+      <GradeFilter />
+      <SizeFilter />
+      <ConnectionFilter />
       <!-- Find Button -->
       <div class="md:flex-shrink h-auto w-auto md:w-32 w m-2">
         <button
@@ -29,16 +32,32 @@
 </template>
 
 <script>
-import FilterDropdown from "./FilterDropdown.vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+// import { mapState } from 'vuex'
+import ProductTypeFilter from "./Filters/ProductTypeFilter.vue";
+import GradeFilter from "./Filters/GradeFilter.vue";
+import SizeFilter from "./Filters/SizeFilter.vue";
+import ConnectionFilter from "./Filters/ConnectionFilter.vue";
 
 export default {
-  components: { FilterDropdown, FontAwesomeIcon },
+  components: {
+    FontAwesomeIcon,
+    ProductTypeFilter,
+    GradeFilter,
+    SizeFilter,
+    ConnectionFilter,
+  },
   data() {
     return {
       faSearch: faSearch,
     };
+  },
+  methods: {},
+  computed: {
+    pipes: function () {
+      return this.$store.state.pipes;
+    },
   },
 };
 </script>
