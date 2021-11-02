@@ -36,6 +36,7 @@
       :showMenu="showMenu"
       :changeFilter="changeFilter"
       :dropdown="dropdownContents"
+      :count="count"
     />
   </div>
 </template>
@@ -60,7 +61,7 @@ export default {
   directives: {
     onClickaway: onClickaway,
   },
-  props: ["filterType", "dropdownContents"],
+  props: ["filterType", "dropdownContents", "count"],
   methods: {
     ...mapActions(["updateFilter"]),
     hideDropdown: function () {

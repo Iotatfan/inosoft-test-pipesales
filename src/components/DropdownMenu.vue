@@ -51,7 +51,7 @@
         v-on:click="changeFilter(item)"
       >
         <p class="text-lg text-left">{{ item }}</p>
-        <p class="text-lg text-right">{{ countQty(item) }}</p>
+        <p class="text-lg text-right">{{ count(item) }}</p>
       </span>
     </div>
   </div>
@@ -65,7 +65,6 @@ export default {
   components: { FontAwesomeIcon },
   data() {
     return {
-      pipes: null,
       faSearch: faSearch,
       keyword: "",
     };
@@ -73,9 +72,11 @@ export default {
   methods: {
     countQty: function (item) {
       let qty = 0;
-      
+      console.log(item);
       this.$store.state.pipes.forEach((pipe) => {
-        if (pipe[this.dropdown.name] === item) qty++;
+        if (pipe[this.dropdown.name] === item) {
+          qty++;
+        }
       });
       return qty;
     },
@@ -89,7 +90,7 @@ export default {
         : this.dropdown.contents;
     },
   },
-  props: ["showMenu", "changeFilter", "dropdown"],
+  props: ["showMenu", "changeFilter", "dropdown", "count"],
   mounted() {
     this.pipes = this.$store.state.pipes;
   },

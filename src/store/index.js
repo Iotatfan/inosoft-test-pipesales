@@ -45,8 +45,10 @@ const actions = {
   },
   getProductTypes({ commit }) {
     let productType = []
+    // let count = {}
 
     state.pipes.forEach((pipe) => {
+      // count[pipe.productType] !== undefined ? count[pipe.productType]++ : count[pipe.productType] = 1
       if (!productType.includes(pipe.productType)) {
         productType.push(pipe.productType);
       }
@@ -55,11 +57,15 @@ const actions = {
   },
   getGrade({ commit }) {
     let grade = []
+    // let count = {}
+
     state.pipes.forEach((pipe) => {
+      // count[pipe.grade] !== undefined ? count[pipe.grade]++ : count[pipe.grade] = 1
       if (!grade.includes(pipe.grade)) {
         isProductTypeFilter(grade, pipe, 'grade')
       }
     });
+    // console.log(count)
     commit('SET_GRADE', grade)
   },
   getSize({ commit }) {
@@ -69,11 +75,8 @@ const actions = {
         if (!state.filters.productType && !state.filters.grade) {
           size.push(pipe.size);
         }
-        else if (state.filters.grade && pipe.grade.includes(state.filters.grade)) {
-          isProductTypeFilter(size, pipe, 'size')
-        }
-        else if (!state.filters.grade) {
-          isProductTypeFilter(size, pipe, 'size')
+        else {
+          isGradeFilter(size, pipe, 'size')
         }
       }
     });
@@ -83,7 +86,16 @@ const actions = {
     let connection = []
     state.pipes.forEach((pipe) => {
       if (!connection.includes(pipe.connection)) {
-        connection.push(pipe.connection);
+        console.log(pipe.connection)
+        if (!state.filters.productType && !state.filters.grade && !state.filters.size) {
+          connection.push(pipe.connection);
+        }
+        else if (state.filters.size && pipe.size.includes(state.filters.size)) {
+          isGradeFilter(connection, pipe, 'connection')
+        }
+        else if (!state.filters.size) {
+          isGradeFilter(connection, pipe, 'connection')
+        }
       }
     });
     commit('SET_CONNECTION', connection)
@@ -92,6 +104,7 @@ const actions = {
     commit('SET_FILTERS', payload)
     dispatch('getGrade')
     dispatch('getSize')
+    dispatch('getConnection')
   }
 }
 
@@ -122,6 +135,15 @@ function isProductTypeFilter(arr, pipe, type) {
   }
   else if (!state.filters.productType) {
     arr.push(pipe[type]);
+  }
+}
+
+function isGradeFilter(arr, pipe, type) {
+  if (state.filters.grade && pipe.grade.includes(state.filters.grade)) {
+    isProductTypeFilter(arr, pipe, type)
+  }
+  else if (!state.filters.grade) {
+    isProductTypeFilter(arr, pipe, type)
   }
 }
 
