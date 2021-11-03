@@ -18,6 +18,9 @@ export default {
     gradeFilter: function () {
       return this.$store.state.grade;
     },
+    productType: function() {
+      return this.filters.productType;
+    }
   },
 };
 </script>

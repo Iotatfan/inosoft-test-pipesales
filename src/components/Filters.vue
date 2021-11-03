@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-200 flex flex-col">
-    <div class="flex flex-col md:flex-row justify-center relative">
+    <div class="flex flex-col md:flex-row justify-center relative w-full">
       <!-- Filter Dropdown -->
       <ProductTypeFilter />
       <GradeFilter />
@@ -15,6 +15,9 @@
             rounded-xl
             bg-yellow-600
             hover:bg-yellow-500
+            transition
+            duration-300
+            ease-in-out
             outline-none
             flex flex-row
             justify-center

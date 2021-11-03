@@ -3,6 +3,7 @@
     <FilterDropdown
       :filterType="'Connection'"
       :dropdownContents="connectionFilter"
+      ref="child"
     />
   </div>
 </template>
@@ -14,12 +15,12 @@ export default {
   components: { FilterDropdown },
   methods: {},
   computed: {
-    filters: function () {
-      return this.$store.state.filters;
-    },
     connectionFilter: function () {
       return this.$store.state.connection;
     },
+  },
+  watch: {
+
   },
 };
 </script>

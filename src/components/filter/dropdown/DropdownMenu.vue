@@ -37,7 +37,7 @@
       />
     </div>
     <!-- Menu -->
-    <div class="flex flex-col my-2 mx-3 max-h-36 overflow-y-scroll">
+    <div class="flex flex-col my-2 mx-3 max-h-36 overflow-y-auto">
       <span
         class="
           flex flex-row
@@ -45,6 +45,9 @@
           cursor-pointer
           px-2
           hover:bg-gray-300
+          transition
+          duration-300
+          ease-in-out
         "
         v-for="item in searchKeywords"
         :key="item"

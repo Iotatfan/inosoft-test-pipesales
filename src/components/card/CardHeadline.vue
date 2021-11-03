@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row">
-    <p class="text-gray-800 font-semibold items text-sm md:text-2xl">
+    <p class="text-gray-800 font-semibold text-sm md:text-2xl">
       {{ text }}
     </p>
   </div>

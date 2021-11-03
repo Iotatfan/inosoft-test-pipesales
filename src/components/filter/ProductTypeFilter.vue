@@ -3,7 +3,6 @@
     <FilterDropdown
       :filterType="'Product Type'"
       :dropdownContents="productTypeFilter"
-      :count="countProductType"
     />
   </div>
 </template>

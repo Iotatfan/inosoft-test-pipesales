@@ -175,6 +175,18 @@ const mutations = {
   },
   SET_FILTERS(state, { name, value }) {
     state.filters[name] = value
+
+    let keys = Object.keys(state.filters)
+    let target = -1
+
+    keys.forEach((key, index) => {
+      if (key === name) {
+        target = index
+      }
+      else if (target != -1 && index > target) {
+        state.filters[key] = null
+      }
+    })
   }
 }
 
