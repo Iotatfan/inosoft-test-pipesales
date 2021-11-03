@@ -37,10 +37,10 @@
 <script>
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import ProductTypeFilter from "./filters/ProductTypeFilter.vue";
-import GradeFilter from "./filters/GradeFilter.vue";
-import SizeFilter from "./filters/SizeFilter.vue";
-import ConnectionFilter from "./filters/ConnectionFilter.vue";
+import ProductTypeFilter from "./filter/ProductTypeFilter.vue";
+import GradeFilter from "./filter/GradeFilter.vue";
+import SizeFilter from "./filter/SizeFilter.vue";
+import ConnectionFilter from "./filter/ConnectionFilter.vue";
 
 export default {
   components: {
