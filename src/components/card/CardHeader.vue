@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import CardHeadline from "../card/CardHeadline.vue";
-import CardText from "../card/CardText.vue";
+import CardHeadline from "./CardHeadline.vue";
+import CardText from "./CardText.vue";
 
 export default {
   components: { CardText, CardHeadline },

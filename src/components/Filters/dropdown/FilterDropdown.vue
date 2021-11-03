@@ -45,7 +45,7 @@
 import { directive as onClickaway } from "vue-clickaway";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faAngleDown, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import DropdownMenu from "./DropdownMenu.vue";
+import DropdownMenu from "../../filters/dropdown/DropdownMenu.vue";
 import { mapActions } from "vuex";
 
 export default {

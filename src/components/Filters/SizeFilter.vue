@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import FilterDropdown from "../FilterDropdown.vue";
+import FilterDropdown from "./dropdown/FilterDropdown.vue";
 
 export default {
   components: { FilterDropdown },
