@@ -14,19 +14,23 @@ const state = {
   },
   productType: {
     name: 'productType',
-    contents: []
+    contents: [],
+    amount: {}
   },
   grade: {
     name: 'grade',
-    contents: []
+    contents: [],
+    amount: {}
   },
   size: {
     name: 'size',
-    contents: []
+    contents: [],
+    amount: {}
   },
   connection: {
     name: 'connection',
-    contents: []
+    contents: [],
+    amount: {}
   }
 }
 
@@ -44,31 +48,51 @@ const actions = {
       })
   },
   getProductTypes({ commit }) {
-    let productType = []
+    let counter = {}
 
-    state.pipes.forEach((pipe) => {
-      if (!productType.includes(pipe.productType)) {
-        productType.push(pipe.productType);
+    let productType = new Set(state.pipes.map(value => {
+      if (value.productType in counter) {
+        counter[value.productType] += 1
       }
-    });
-    commit('SET_PRODUCT_TYPE', productType)
+      else {
+        counter[value.productType] = 1
+      }
+      return value.productType
+    }))
+
+    const payload = {
+      contents: Array.from(productType),
+      amount: counter
+    }
+
+    commit('SET_PRODUCT_TYPE', payload)
   },
   getGrade({ commit }) {
+    let counter = {}
 
     let temp = state.pipes.filter((pipe) => {
       return (state.filters.productType ? state.filters.productType === pipe.productType : true)
     })
-    let grade = new Set(temp.map(value => value.grade))
 
-    // state.pipes.forEach((pipe) => {
-    //   if (!grade.includes(pipe.grade)) {
-    //     isProductTypeFilter(grade, pipe, 'grade')
-    //   }
-    // });
+    let grade = new Set(temp.map(value => {
+      if (value.grade in counter) {
+        counter[value.grade] += 1
+      }
+      else {
+        counter[value.grade] = 1
+      }
+      return value.grade
+    }))
 
-    commit('SET_GRADE', Array.from(grade))
+    const payload = {
+      contents: Array.from(grade),
+      amount: counter
+    }
+
+    commit('SET_GRADE', payload)
   },
   getSize({ commit }) {
+    let counter = {}
 
     let temp = state.pipes.filter((pipe) => {
       return (
@@ -76,47 +100,50 @@ const actions = {
         && (state.filters.grade ? state.filters.grade === pipe.grade : true
         )
     })
-    let size = new Set(temp.map(value => value.size))
+    let size = new Set(temp.map(value => {
+      if (value.size in counter) {
+        counter[value.size] += 1
+      }
+      else {
+        counter[value.size] = 1
+      }
+      return value.size
+    }))
 
-    // state.pipes.forEach((pipe) => {
-    //   if (!size.includes(pipe.size)) {
-    //     if (!state.filters.productType && !state.filters.grade) {
-    //       size.push(pipe.size);
-    //     }
-    //     else {
-    //       isGradeFilter(size, pipe, 'size')
-    //     }
-    //   }
-    // });
+    const payload = {
+      contents: Array.from(size),
+      amount: counter
+    }
 
-    commit('SET_SIZE', Array.from(size))
+    commit('SET_SIZE', payload)
   },
   getConnection({ commit }) {
+    let counter = {}
 
     let temp = state.pipes.filter((pipe) => {
       return (
         state.filters.productType ? state.filters.productType === pipe.productType : true)
         && (state.filters.grade ? state.filters.grade === pipe.grade : true
-        && (state.filters.size ? state.filters.size === pipe.size : true)
+          && (state.filters.size ? state.filters.size === pipe.size : true)
         )
     })
 
-    let connection = new Set(temp.map(value => value.connection))
+    let connection = new Set(temp.map(value => {
+      if (value.connection in counter) {
+        counter[value.connection] += 1
+      }
+      else {
+        counter[value.connection] = 1
+      }
+      return value.connection
+    }))
 
-    // state.pipes.forEach((pipe) => {
-    //   if (!connection.includes(pipe.connection)) {
-    //     if (!state.filters.productType && !state.filters.grade && !state.filters.size) {
-    //       connection.push(pipe.connection);
-    //     }
-    //     else if (state.filters.size && pipe.size.includes(state.filters.size)) {
-    //       isGradeFilter(connection, pipe, 'connection')
-    //     }
-    //     else if (!state.filters.size) {
-    //       isGradeFilter(connection, pipe, 'connection')
-    //     }
-    //   }
-    // });
-    commit('SET_CONNECTION', Array.from(connection))
+    const payload = {
+      contents: Array.from(connection),
+      amount: counter
+    }
+
+    commit('SET_CONNECTION', payload)
   },
   updateFilter({ commit, dispatch }, payload) {
     commit('SET_FILTERS', payload)
@@ -130,40 +157,26 @@ const mutations = {
   SET_PIPES(state, pipes) {
     state.pipes = pipes
   },
-  SET_PRODUCT_TYPE(state, productType) {
-    state.productType.contents = productType
+  SET_PRODUCT_TYPE(state, { contents, amount }) {
+    state.productType.contents = contents
+    state.productType.amount = amount
   },
-  SET_GRADE(state, grade) {
-    state.grade.contents = grade
+  SET_GRADE(state, { contents, amount }) {
+    state.grade.contents = contents
+    state.grade.amount = amount
   },
-  SET_SIZE(state, size) {
-    state.size.contents = size
+  SET_SIZE(state, { contents, amount }) {
+    state.size.contents = contents
+    state.size.amount = amount
   },
-  SET_CONNECTION(state, connection) {
-    state.connection.contents = connection
+  SET_CONNECTION(state, { contents, amount }) {
+    state.connection.contents = contents
+    state.connection.amount = amount
   },
   SET_FILTERS(state, { name, value }) {
     state.filters[name] = value
   }
 }
-
-// function isProductTypeFilter(arr, pipe, type) {
-//   if (state.filters.productType && pipe.productType.includes(state.filters.productType)) {
-//     arr.push(pipe[type])
-//   }
-//   else if (!state.filters.productType) {
-//     arr.push(pipe[type]);
-//   }
-// }
-
-// function isGradeFilter(arr, pipe, type) {
-//   if (state.filters.grade && pipe.grade.includes(state.filters.grade)) {
-//     isProductTypeFilter(arr, pipe, type)
-//   }
-//   else if (!state.filters.grade) {
-//     isProductTypeFilter(arr, pipe, type)
-//   }
-// }
 
 export default new Vuex.Store({
   state,
