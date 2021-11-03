@@ -10,15 +10,20 @@
 
 <script>
 import FilterDropdown from "../FilterDropdown.vue";
+
 export default {
   components: { FilterDropdown },
   methods: {
     countProductType: function (item) {
       let qty = 0;
 
-      this.$store.state.pipes.forEach((pipe) => {
-        if (pipe[this.productTypeFilter.name] === item) qty++;
+      this.$store.state.pipes.filter((pipe) => {
+        return pipe[this.productTypeFilter.name] === item ? qty++ : false;
       });
+
+      // this.$store.state.pipes.forEach((pipe) => {
+      //   if (pipe[this.productTypeFilter.name] === item) qty++;
+      // });
 
       return qty;
     },

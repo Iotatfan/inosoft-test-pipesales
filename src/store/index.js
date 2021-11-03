@@ -45,10 +45,8 @@ const actions = {
   },
   getProductTypes({ commit }) {
     let productType = []
-    // let count = {}
 
     state.pipes.forEach((pipe) => {
-      // count[pipe.productType] !== undefined ? count[pipe.productType]++ : count[pipe.productType] = 1
       if (!productType.includes(pipe.productType)) {
         productType.push(pipe.productType);
       }
@@ -56,49 +54,69 @@ const actions = {
     commit('SET_PRODUCT_TYPE', productType)
   },
   getGrade({ commit }) {
-    let grade = []
-    // let count = {}
 
-    state.pipes.forEach((pipe) => {
-      // count[pipe.grade] !== undefined ? count[pipe.grade]++ : count[pipe.grade] = 1
-      if (!grade.includes(pipe.grade)) {
-        isProductTypeFilter(grade, pipe, 'grade')
-      }
-    });
-    // console.log(count)
-    commit('SET_GRADE', grade)
+    let temp = state.pipes.filter((pipe) => {
+      return (state.filters.productType ? state.filters.productType === pipe.productType : true)
+    })
+    let grade = new Set(temp.map(value => value.grade))
+
+    // state.pipes.forEach((pipe) => {
+    //   if (!grade.includes(pipe.grade)) {
+    //     isProductTypeFilter(grade, pipe, 'grade')
+    //   }
+    // });
+
+    commit('SET_GRADE', Array.from(grade))
   },
   getSize({ commit }) {
-    let size = []
-    state.pipes.forEach((pipe) => {
-      if (!size.includes(pipe.size)) {
-        if (!state.filters.productType && !state.filters.grade) {
-          size.push(pipe.size);
-        }
-        else {
-          isGradeFilter(size, pipe, 'size')
-        }
-      }
-    });
-    commit('SET_SIZE', size)
+
+    let temp = state.pipes.filter((pipe) => {
+      return (
+        state.filters.productType ? state.filters.productType === pipe.productType : true)
+        && (state.filters.grade ? state.filters.grade === pipe.grade : true
+        )
+    })
+    let size = new Set(temp.map(value => value.size))
+
+    // state.pipes.forEach((pipe) => {
+    //   if (!size.includes(pipe.size)) {
+    //     if (!state.filters.productType && !state.filters.grade) {
+    //       size.push(pipe.size);
+    //     }
+    //     else {
+    //       isGradeFilter(size, pipe, 'size')
+    //     }
+    //   }
+    // });
+
+    commit('SET_SIZE', Array.from(size))
   },
   getConnection({ commit }) {
-    let connection = []
-    state.pipes.forEach((pipe) => {
-      if (!connection.includes(pipe.connection)) {
-        console.log(pipe.connection)
-        if (!state.filters.productType && !state.filters.grade && !state.filters.size) {
-          connection.push(pipe.connection);
-        }
-        else if (state.filters.size && pipe.size.includes(state.filters.size)) {
-          isGradeFilter(connection, pipe, 'connection')
-        }
-        else if (!state.filters.size) {
-          isGradeFilter(connection, pipe, 'connection')
-        }
-      }
-    });
-    commit('SET_CONNECTION', connection)
+
+    let temp = state.pipes.filter((pipe) => {
+      return (
+        state.filters.productType ? state.filters.productType === pipe.productType : true)
+        && (state.filters.grade ? state.filters.grade === pipe.grade : true
+        && (state.filters.size ? state.filters.size === pipe.size : true)
+        )
+    })
+
+    let connection = new Set(temp.map(value => value.connection))
+
+    // state.pipes.forEach((pipe) => {
+    //   if (!connection.includes(pipe.connection)) {
+    //     if (!state.filters.productType && !state.filters.grade && !state.filters.size) {
+    //       connection.push(pipe.connection);
+    //     }
+    //     else if (state.filters.size && pipe.size.includes(state.filters.size)) {
+    //       isGradeFilter(connection, pipe, 'connection')
+    //     }
+    //     else if (!state.filters.size) {
+    //       isGradeFilter(connection, pipe, 'connection')
+    //     }
+    //   }
+    // });
+    commit('SET_CONNECTION', Array.from(connection))
   },
   updateFilter({ commit, dispatch }, payload) {
     commit('SET_FILTERS', payload)
@@ -129,23 +147,23 @@ const mutations = {
   }
 }
 
-function isProductTypeFilter(arr, pipe, type) {
-  if (state.filters.productType && pipe.productType.includes(state.filters.productType)) {
-    arr.push(pipe[type])
-  }
-  else if (!state.filters.productType) {
-    arr.push(pipe[type]);
-  }
-}
+// function isProductTypeFilter(arr, pipe, type) {
+//   if (state.filters.productType && pipe.productType.includes(state.filters.productType)) {
+//     arr.push(pipe[type])
+//   }
+//   else if (!state.filters.productType) {
+//     arr.push(pipe[type]);
+//   }
+// }
 
-function isGradeFilter(arr, pipe, type) {
-  if (state.filters.grade && pipe.grade.includes(state.filters.grade)) {
-    isProductTypeFilter(arr, pipe, type)
-  }
-  else if (!state.filters.grade) {
-    isProductTypeFilter(arr, pipe, type)
-  }
-}
+// function isGradeFilter(arr, pipe, type) {
+//   if (state.filters.grade && pipe.grade.includes(state.filters.grade)) {
+//     isProductTypeFilter(arr, pipe, type)
+//   }
+//   else if (!state.filters.grade) {
+//     isProductTypeFilter(arr, pipe, type)
+//   }
+// }
 
 export default new Vuex.Store({
   state,

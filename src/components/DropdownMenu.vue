@@ -8,7 +8,7 @@
       rounded-xl
       w-full
       my-1
-      z-10
+      z-20
     "
     v-if="showMenu"
   >

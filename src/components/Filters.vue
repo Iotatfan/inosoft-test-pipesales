@@ -14,11 +14,14 @@
             w-full
             rounded-xl
             bg-yellow-600
+            hover:bg-yellow-500
+            outline-none
             flex flex-row
             justify-center
             my-2
             md:my-auto
           "
+          v-on:click="findProduct"
         >
           <font-awesome-icon
             :icon="faSearch"
@@ -34,11 +37,10 @@
 <script>
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-// import { mapState } from 'vuex'
-import ProductTypeFilter from "./Filters/ProductTypeFilter.vue";
-import GradeFilter from "./Filters/GradeFilter.vue";
-import SizeFilter from "./Filters/SizeFilter.vue";
-import ConnectionFilter from "./Filters/ConnectionFilter.vue";
+import ProductTypeFilter from "./filters/ProductTypeFilter.vue";
+import GradeFilter from "./filters/GradeFilter.vue";
+import SizeFilter from "./filters/SizeFilter.vue";
+import ConnectionFilter from "./filters/ConnectionFilter.vue";
 
 export default {
   components: {
@@ -53,6 +55,7 @@ export default {
       faSearch: faSearch,
     };
   },
+  props: ["findProduct"],
   methods: {},
   computed: {
     pipes: function () {

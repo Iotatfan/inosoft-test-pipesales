@@ -10,6 +10,7 @@
 
 <script>
 import FilterDropdown from "../FilterDropdown.vue";
+
 export default {
   components: { FilterDropdown },
   methods: {
@@ -50,7 +51,6 @@ export default {
           }
         }
       });
-      console.log(item, qty);
       return qty;
     },
   },
