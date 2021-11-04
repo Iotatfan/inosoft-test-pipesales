@@ -5,7 +5,7 @@
     <CardText
       :title="`Quantity (${unit})`"
       :content="quantity"
-      class="items-end w-1/4"
+      class="items-end text-right w-1/4"
     />
   </div>
 </template>

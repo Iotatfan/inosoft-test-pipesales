@@ -11,7 +11,7 @@
       mx-auto
     "
   >
-    <div class="flex flex-col w-full mx-5 my-3">
+    <div class="flex flex-col w-full mx-2 md:mx-5 my-3">
       <CardHeader
         :itemDesc="product.item_desc"
         :productType="product.productType"
