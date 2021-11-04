@@ -119,7 +119,7 @@ const mutations = {
       if (key === name) {
         target = index
       }
-      else if (target != -1 && index > target) {
+      else if (target != -1 && index > target && value) {
         state.filters[key] = null
       }
     })
