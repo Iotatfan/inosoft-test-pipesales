@@ -9,7 +9,7 @@
           {{ filterType }}
         </p>
         <font-awesome-icon
-          :icon="faAngleDown"
+          :icon="showMenu ? faAngleUp : faAngleDown"
           class="
             text-gray-900
             hover:text-gray-700
@@ -60,7 +60,11 @@
 <script>
 import { directive as onClickaway } from "vue-clickaway";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faAngleDown, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDown,
+  faAngleUp,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import DropdownMenu from "./DropdownMenu.vue";
 import { mapActions } from "vuex";
 
@@ -70,6 +74,7 @@ export default {
     return {
       all: "ALL",
       faAngleDown: faAngleDown,
+      faAngleUp: faAngleUp,
       faTimesCircle: faTimesCircle,
       showMenu: false,
     };
