@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-// const url = "http://127.0.0.1:8000/api/pipes"
+const url = "http://127.0.0.1:8000/api/pipes"
 
 const state = {
   pipes: [],
@@ -38,13 +38,16 @@ const state = {
 
 const actions = {
   getPipes({ commit, dispatch }) {
-    axios.get('PipesData.json')
+    axios.get(url)
       .then(res => {
         commit('SET_PIPES', res.data)
         dispatch('getProductTypes')
         dispatch('getGrade')
         dispatch('getSize')
         dispatch('getConnection')
+      })
+      .catch(er => {
+        console.log(er)
       })
   },
   getProductTypes({ commit }) {
