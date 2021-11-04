@@ -1,29 +1,8 @@
-# inosoft-test-pipesales
+# Inosoft Frontend Developer Test
 
-## Project setup
-```
-npm install
-```
+[The project API can be found here](https://github.com/Iotatfan/inosoft-test-pipesales-backend)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Insatallation
+1. Run the API ([The project API](https://github.com/Iotatfan/inosoft-test-pipesales-backend)). Instruction included in the repository.
+3. Run ```npm install``` to setup the project.
+4. Run ```npm run serve``` to start the development server.
