@@ -4,6 +4,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+// const url = "http://127.0.0.1:8000/api/pipes"
+
 const state = {
   pipes: [],
   filters: {
@@ -34,8 +36,6 @@ const state = {
   }
 }
 
-const getters = {}
-
 const actions = {
   getPipes({ commit, dispatch }) {
     axios.get('PipesData.json')
@@ -48,78 +48,26 @@ const actions = {
       })
   },
   getProductTypes({ commit }) {
-    let counter = {}
-
-    let productType = new Set(state.pipes.map(value => {
-      if (value.productType in counter) {
-        counter[value.productType] += 1
-      }
-      else {
-        counter[value.productType] = 1
-      }
-      return value.productType
-    }))
-
-    const payload = {
-      contents: Array.from(productType),
-      amount: counter
-    }
-
-    commit('SET_PRODUCT_TYPE', payload)
+    commit('SET_PRODUCT_TYPE', calculateFilter(state.pipes, state.productType.name))
   },
   getGrade({ commit }) {
-    let counter = {}
-
     let temp = state.pipes.filter((pipe) => {
       return (state.filters.productType ? state.filters.productType === pipe.productType : true)
     })
 
-    let grade = new Set(temp.map(value => {
-      if (value.grade in counter) {
-        counter[value.grade] += 1
-      }
-      else {
-        counter[value.grade] = 1
-      }
-      return value.grade
-    }))
-
-    const payload = {
-      contents: Array.from(grade),
-      amount: counter
-    }
-
-    commit('SET_GRADE', payload)
+    commit('SET_GRADE', calculateFilter(temp, state.grade.name))
   },
   getSize({ commit }) {
-    let counter = {}
-
     let temp = state.pipes.filter((pipe) => {
       return (
         state.filters.productType ? state.filters.productType === pipe.productType : true)
         && (state.filters.grade ? state.filters.grade === pipe.grade : true
         )
     })
-    let size = new Set(temp.map(value => {
-      if (value.size in counter) {
-        counter[value.size] += 1
-      }
-      else {
-        counter[value.size] = 1
-      }
-      return value.size
-    }))
 
-    const payload = {
-      contents: Array.from(size),
-      amount: counter
-    }
-
-    commit('SET_SIZE', payload)
+    commit('SET_SIZE', calculateFilter(temp, state.size.name))
   },
   getConnection({ commit }) {
-    let counter = {}
-
     let temp = state.pipes.filter((pipe) => {
       return (
         state.filters.productType ? state.filters.productType === pipe.productType : true)
@@ -128,22 +76,7 @@ const actions = {
         )
     })
 
-    let connection = new Set(temp.map(value => {
-      if (value.connection in counter) {
-        counter[value.connection] += 1
-      }
-      else {
-        counter[value.connection] = 1
-      }
-      return value.connection
-    }))
-
-    const payload = {
-      contents: Array.from(connection),
-      amount: counter
-    }
-
-    commit('SET_CONNECTION', payload)
+    commit('SET_CONNECTION', calculateFilter(temp, state.connection.name))
   },
   updateFilter({ commit, dispatch }, payload) {
     commit('SET_FILTERS', payload)
@@ -190,9 +123,29 @@ const mutations = {
   }
 }
 
+function calculateFilter(arr, key) {
+  let counter = {}
+
+  const result = new Set(arr.map(value => {
+    if (value[key] in counter) {
+      counter[value[key]] += 1
+    }
+    else {
+      counter[value[key]] = 1
+    }
+    return value[key]
+  }))
+
+  const payload = {
+    contents: Array.from(result),
+    amount: counter
+  }
+
+  return payload
+}
+
 export default new Vuex.Store({
   state,
-  getters,
   actions,
   mutations,
 })

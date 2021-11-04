@@ -3,7 +3,6 @@
     <FilterDropdown
       :filterType="'Connection'"
       :dropdownContents="connectionFilter"
-      ref="child"
     />
   </div>
 </template>

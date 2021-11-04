@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-200 flex flex-col">
-    <div class="flex flex-col md:flex-row justify-center relative w-full">
+    <div class="flex flex-col md:flex-row justify-center relative">
       <!-- Filter Dropdown -->
       <ProductTypeFilter />
       <GradeFilter />

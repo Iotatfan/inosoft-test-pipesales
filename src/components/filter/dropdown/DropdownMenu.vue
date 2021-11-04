@@ -82,9 +82,6 @@ export default {
     },
   },
   props: ["showMenu", "changeFilter", "dropdown"],
-  mounted() {
-    this.pipes = this.$store.state.pipes;
-  },
 };
 </script>
 

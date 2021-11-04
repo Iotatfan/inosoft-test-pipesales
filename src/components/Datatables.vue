@@ -13,7 +13,6 @@ import ProductCard from "./card/ProductCard.vue";
 export default {
   components: { ProductCard },
   props: ["products"],
-  computed: {},
 };
 </script>
 
