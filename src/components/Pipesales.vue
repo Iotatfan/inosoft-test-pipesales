@@ -49,7 +49,10 @@ export default {
             ? this.filters.productType === pipe.productType
             : true) &&
           (this.filters.grade ? this.filters.grade === pipe.grade : true) &&
-          (this.filters.size ? this.filters.size === pipe.size : true)
+          (this.filters.size ? this.filters.size === pipe.size : true) &&
+          (this.filters.connection
+            ? this.filters.connection === pipe.connection
+            : true)
         );
       });
       this.showProduct = true;
